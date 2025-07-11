@@ -1,0 +1,51 @@
+<div class="todo-list-header">
+    <div class="todo-list-header-headline">
+        <h2>To-do list</h2>
+    </div>
+    <button mat-flat-button (click)="add()">
+        <mat-icon matPrefix>add</mat-icon>
+        New to-do item
+    </button>
+</div>
+
+<div class="todo-search-bar">
+    <mat-form-field class="search-field">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput [formControl]="searchControl" placeholder="Search for to-do items...">
+        <mat-hint>Search to-do items by keywords.</mat-hint>
+        <button matSuffix mat-icon-button (click)="clear()"><mat-icon>clear</mat-icon></button>
+    </mat-form-field>
+</div>
+
+<ng-container *ngIf="todoList.length === 0">
+    <div class="todo-list-placeholder">
+        <div class="todo-list-placeholder-tile">
+            <mat-icon>airline_seat_individual_suite</mat-icon>
+            <p>No to-do items found. You can sleep safely.</p>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="todoList.length > 0">
+    <div class="todo-list">
+        <p class="search-hint"><small>Showing {{ filteredCount }} of total {{ todoListCount }} to-do items.</small></p>
+        <div class="todo-list-grid">
+            <div *ngFor="let todo of filteredTodoList; let idx = index" class="todo-card">
+                <div class="todo-card-header">
+                    <h2>{{ todo.title }}</h2>
+                    <div class="todo-card-header-actions">
+                        <button mat-icon-button (click)="removeTodo(idx)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="todo-card-content">
+                    <p>{{ todo.description }}</p>
+                </div>
+                <div class="todo-card-footer">
+                    <p><small>Added on {{ todo.addedOn | date:'yyyy-MM-dd HH:mm:ss'}}</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
