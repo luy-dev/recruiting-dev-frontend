@@ -35,7 +35,7 @@ Returns all saved to-do items. If no items are present, returns an empty list.
 // Request
 GET /todo
 
-// Respone
+// Response
 200 OK
 [
     { 
@@ -60,7 +60,7 @@ POST /todo
     addedOn: "2025-01-06T12:34:00Z" 
 } 
 
-// Respone
+// Response
 200 OK
 { 
     id: 1,
@@ -78,6 +78,6 @@ Deletes a to-do item with the given ID. Returns always `200 OK` - event if there
 // Request
 DELETE /todo?id=1
 
-// Respone
+// Response
 200 OK
 ```
