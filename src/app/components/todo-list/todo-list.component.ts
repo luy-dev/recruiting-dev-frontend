@@ -110,25 +110,30 @@ export class TodoListComponent {
 
 @Component({
     selector: 'app-add-todo-dialog',
+    host: {
+        '[attr.data-testid]': '"add-todo-dialog"'
+    },
     template: `
         <h2 mat-dialog-title>Add a new to-do</h2>
         <mat-dialog-content>
             <div class="add-todo-form">
                 <mat-form-field>
                     <mat-label>Title</mat-label>
-                    <input matInput [formControl]="titleControl" placeholder="Title">
+                    <input matInput data-testid="title-input" [formControl]="titleControl" placeholder="Title">
                     <mat-error *ngIf="titleControl.hasError('required')">Title is required.</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Description</mat-label>
-                    <textarea matInput [formControl]="descriptionControl" placeholder="Description"></textarea>
+                    <textarea matInput data-testid="description-input" [formControl]="descriptionControl" placeholder="Description"></textarea>
                     <mat-error *ngIf="descriptionControl.hasError('required')">Description is required.</mat-error>
                 </mat-form-field>
             </div>
         </mat-dialog-content>
         <mat-dialog-actions>
             <button mat-button (click)="cancel()">Cancel</button>
-            <button mat-flat-button [mat-dialog-close]="add()"
+            <button mat-flat-button
+                    data-testid="add-btn"
+                    [mat-dialog-close]="add()"
                     [disabled]="titleControl.invalid || descriptionControl.invalid">
                 Add
             </button>

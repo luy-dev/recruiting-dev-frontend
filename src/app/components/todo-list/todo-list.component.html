@@ -2,7 +2,7 @@
     <div class="todo-list-header-headline">
         <h2>To-do list</h2>
     </div>
-    <button mat-flat-button (click)="add()">
+    <button mat-flat-button data-testid="add-todo-btn" (click)="add()">
         <mat-icon matPrefix>add</mat-icon>
         New to-do item
     </button>
@@ -11,9 +11,12 @@
 <div class="todo-search-bar">
     <mat-form-field class="search-field">
         <mat-icon matPrefix>search</mat-icon>
-        <input matInput [formControl]="searchControl" placeholder="Search for to-do items...">
+        <input matInput [formControl]="searchControl" data-testid="search-input"
+               placeholder="Search for to-do items...">
         <mat-hint>Search to-do items by keywords.</mat-hint>
-        <button matSuffix mat-icon-button (click)="clear()"><mat-icon>clear</mat-icon></button>
+        <button matSuffix mat-icon-button (click)="clear()">
+            <mat-icon>clear</mat-icon>
+        </button>
     </mat-form-field>
 </div>
 
@@ -28,13 +31,21 @@
 
 <ng-container *ngIf="todoList.length > 0">
     <div class="todo-list">
-        <p class="search-hint"><small>Showing {{ filteredCount }} of total {{ todoListCount }} to-do items.</small></p>
+        <p class="search-hint">
+            <small>
+                Showing
+                <span data-testid="matched-todos-count">{{ filteredCount }}</span>
+                of total
+                <span data-testid="total-todos-count">{{ todoListCount }}</span>
+                to-do items.
+            </small>
+        </p>
         <div class="todo-list-grid">
-            <div *ngFor="let todo of filteredTodoList; let idx = index" class="todo-card">
+            <div *ngFor="let todo of filteredTodoList; let idx = index" class="todo-card" data-testid="todo-card">
                 <div class="todo-card-header">
                     <h2>{{ todo.title }}</h2>
                     <div class="todo-card-header-actions">
-                        <button mat-icon-button (click)="removeTodo(idx)">
+                        <button mat-icon-button data-testid="remove-todo-btn" (click)="removeTodo(idx)">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
@@ -43,7 +54,7 @@
                     <p>{{ todo.description }}</p>
                 </div>
                 <div class="todo-card-footer">
-                    <p><small>Added on {{ todo.addedOn | date:'yyyy-MM-dd HH:mm:ss'}}</small></p>
+                    <p><small>Added on {{ todo.addedOn | date:'yyyy-MM-dd HH:mm:ss' }}</small></p>
                 </div>
             </div>
         </div>

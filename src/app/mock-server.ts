@@ -1,6 +1,7 @@
 import {isTodo, Todo} from "./todo.model";
 import {HttpEvent, HttpRequest, HttpResponse, HttpStatusCode} from "@angular/common/http";
 import {Observable, of} from "rxjs";
+import {TODO_LIST_KEY} from "./mock-storage";
 
 type HttpHandler = (req: HttpRequest<unknown>) => Observable<HttpEvent<unknown>>;
 
@@ -16,7 +17,6 @@ interface HttpHandlerRegistration {
  */
 export class MockServer {
 
-    private static readonly TODO_LIST_KEY = 'luy_todo_list';
     private static readonly INITIAL_TODO_LIST: Todo[] = [
         {
             id: 1,
@@ -37,6 +37,7 @@ export class MockServer {
             addedOn: new Date()
         },
     ];
+
     private static readonly HANDLER_REGISTRATION: HttpHandlerRegistration[] = [
         {method: 'GET', urlMatcher: /\/todo/, handler: MockServer.get},
         {method: 'POST', urlMatcher: /\/todo/, handler: MockServer.post},
@@ -47,7 +48,8 @@ export class MockServer {
      * Initializes the local storage with an initial to-do item list.
      */
     static initialize(): void {
-        const todoListJson = localStorage.getItem(MockServer.TODO_LIST_KEY);
+        const todoListJson = localStorage.getItem(TODO_LIST_KEY);
+        console.log("TodoListJson", todoListJson);
         if (todoListJson == null) {
             MockServer.saveTodoList(MockServer.INITIAL_TODO_LIST);
         }
@@ -57,7 +59,7 @@ export class MockServer {
      * Removes all data from the local storage.
      */
     static clear(): void {
-        localStorage.removeItem(MockServer.TODO_LIST_KEY);
+        localStorage.removeItem(TODO_LIST_KEY);
     }
 
     static dispatch(req: HttpRequest<unknown>): Observable<HttpEvent<unknown>> {
@@ -133,7 +135,7 @@ export class MockServer {
     }
 
     private static getTodoList(): Todo[] {
-        const todoListJson = localStorage.getItem(MockServer.TODO_LIST_KEY);
+        const todoListJson = localStorage.getItem(TODO_LIST_KEY);
         if (todoListJson == null) {
             return [];
         } else {
@@ -143,6 +145,6 @@ export class MockServer {
 
     private static saveTodoList(todoList: Todo[]): void {
         const todoListJson = JSON.stringify(todoList);
-        localStorage.setItem(MockServer.TODO_LIST_KEY, todoListJson);
+        localStorage.setItem(TODO_LIST_KEY, todoListJson);
     }
 }
