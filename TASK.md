@@ -3,6 +3,8 @@ Your task is to refactor the to-do application so it's actually maintainable and
 practices. Take a look at the code and fix all the things you don't like. Feel free to challenge anything and don't
 hesitate to come up with your own ideas!
 
+Please think out loud and share your thought process. It's very important!
+
 Your entry point is the `todo-list` component. Analyze what's wrong with it and think how you could refactor it.
 The to-do list has the following functions:
 
